@@ -1,5 +1,28 @@
 import * as vscode from 'vscode';
-import { ParseHtml, getClassTreeFromAST } from './core';
+
+const convertText = (selection: string) => {
+	let result = '';
+
+	for(const item of selection.split(';')) {
+		let [key, value] = item.split(":");
+		if(!key || !value) {
+			continue;
+		}
+
+		if(key.includes('-')) {
+			const index = key.indexOf('-');
+			key = `${key.slice(0, index)}${key[index + 1].toLocaleUpperCase()}${key.slice(index + 2)}`;
+		}
+
+		if(value.startsWith(' ')) {
+			value = value.slice(1);
+		}
+		 
+		result += `${key}: '${value}',`;
+	}
+
+	return result;
+};
 
 export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('css2object.css2object', async () => {
@@ -7,26 +30,12 @@ export function activate(context: vscode.ExtensionContext) {
 		if(!editor) {return;}
 		const allSelections = editor.selections;
 
-		allSelections.forEach(async selection => {
-			const text = editor.document.getText(selection);
-			const parseHtml = new ParseHtml(`<div>${text}</div>`);
-	
-			try {
-				const astObj = parseHtml.parse();
-
-				if(!astObj) {
-					vscode.window.showErrorMessage("Can't find HTML");
-					return;
-				}
-	
-				const cssTree = getClassTreeFromAST(astObj);
-				await vscode.env.clipboard.writeText(cssTree);
-				vscode.window.showInformationMessage('CSS tree copied successfully');
-			} catch(e: any) {
-				vscode.window.showErrorMessage(e.message);
-				return;
-			}
-
+		editor.edit(editBuilder => {
+			// 遍历并替换文本
+			allSelections.forEach(selection => {
+				const text = editor.document.getText(selection);
+				editBuilder.replace(selection, convertText(text));
+			});
 		});
 	});
 

@@ -1,65 +1,49 @@
 中文 ｜ [English](https://github.com/liuxueyong123/html2cssTree/blob/master/README-english.md)
 
-## html2csstree
+## css2object
 
-[![Build Status](./assets/badges/badge-lines.svg.png)](./assets/badges/badge-lines.svg.png)
-[![Build Status](./assets/badges/badge-branches.svg.png)](./assets/badges/badge-branches.svg.png)
-
-一款 vscode 插件，用于对选中的 html 进行语法解析，将生成的 css class 树复制到剪贴板，省去手动写 css class 的困扰
+一款 vscode 插件，将选中的 css 进行转换为 css object
 
 ## 下载
 
-已经上架：[marketplace.visualstudio.com](https://marketplace.visualstudio.com/items?itemName=liuxueyong123.html2csstree)
+已经上架：[marketplace.visualstudio.com](https://marketplace.visualstudio.com/items?itemName=liuxueyong123.css2object)
 
-或者在 vscode 扩展中直接搜索 html2csstree 安装即可
+或者在 vscode 扩展中直接搜索 css2object 安装即可
 
 ## 快捷键
 
-mac: `command + 2`
+mac: `command + 3`
 
-windows: `ctrl + 2`
+windows: `ctrl + 3`
 
 如有冲突，用户可自定义快捷键
 
 ## 功能
 
-选中需要解析的一段 html 后，按下快捷键（或右键菜单选择html2css）即可将生成的 css tree 复制到剪贴板以供使用
+选中需要转换的 css 后，按下快捷键（或右键菜单选择 css2object）即可转换为 css object
 
 例：
 
-``` html
-<div class="parent">
-  <div class="child-1">
-    <div class="child-child-1"></div>
-    <div class="child-child-2"></div>
-  </div>
-  <div class="child-2"></div>
-</div>
+``` css
+position: fixed;
+bottom: 0;
+left: 0;
+right: 0;
+max-width: 500px;
+margin: 0 auto;
 ```
 
 结果：
 
 ``` css
-.parent {
-  .child-1 {
-    .child-child-1 {}
-    .child-child-2 {}
-  }
-  .child-2 {}
-}
+position: 'fixed',
+bottom: '0',
+left: '0',
+right: '0',
+maxWidth: '500px',
+margin: '0 auto',
 ```
 
 ## License
 
 MIT © Richard McRichface
-
-## TODO List
-
-- 全局错误处理 ✅
-- 测试用例补充
-- CHANGELOG 补充 ✅
-- readme 中英文切换 ✅
-- readme 录制 usage 视频
-- 支持右键菜单转换 css ✅
-- [部分情况下存在解析错误](https://github.com/liuxueyong123/html2cssTree/issues/3)
-- [解析 html 为 AST 过程研究优化](https://github.com/liuxueyong123/html2cssTree/issues/1)
