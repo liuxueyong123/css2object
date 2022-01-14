@@ -1,5 +1,3 @@
-中文 ｜ [English](https://github.com/liuxueyong123/html2cssTree/blob/master/README-english.md)
-
 ## css2object
 
 一款 vscode 插件，将选中的 css 进行转换为 css object
